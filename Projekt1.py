@@ -2,14 +2,20 @@
 
 #Superklassen
 class Karaktärer:
-    def __init__(self,namn,hälsa,power):
+    def __init__(self,namn,hälsa,power,stamina):
         self.namn = namn
         self.hälsa = hälsa
         self.skada = power
+        self.stamina = stamina
     
     def attack(self, motståndare):
-        print(f"{self.namn} attackerar {motståndare.namn}")
-        motståndare.Ta_Skada(self.power)
+        if self.stamina>0:
+            print(f"{self.namn} attackerar {motståndare.namn}")
+            motståndare.Ta_Skada(self.power)
+            self.stamina -= 10
+            print(f"Stamina Kvar: {self.stamina}\n")
+        else:
+            print(f"{self.namn} är för trött för att attackera!\n Stamina: {self.stamina} \n")
     
     # Vad händer efter karaktären tagit skada.
     def Ta_Skada(self, skada):
@@ -25,19 +31,23 @@ class Karaktärer:
 #Karaktär 1
 class Mage(Karaktärer):
     def __init__(self,namn,hälsa,power):
-        super().__init__(namn,hälsa,power)
+        super().__init__(namn,hälsa,power,stamina=0)
+
+    def attack(self, motståndare):
+        print(f"{self.namn} Attackerar {motståndare.namn}")
+        motståndare.Ta_Skada(self.powerx)
 
 #Karaktär 2 
 class Assasin(Karaktärer):
-    def __init__(self,namn,hälsa,power):
-        super().__init__(namn,hälsa,power)
+    def __init__(self,namn,hälsa,power,stamina):
+        super().__init__(namn,hälsa,power,stamina)
 
 #Karaktär 3
 class Shieldbearer(Karaktärer):
-    def __init__(self,namn,hälsa,power):
-        super().__init__(namn,hälsa,power)
+    def __init__(self,namn,hälsa,power,stamina):
+        super().__init__(namn,hälsa,power,stamina)
 
 #Karaktär 4 
 class Ranger(Karaktärer):
-    def __init__(self,namn,hälsa,power):
-        super().__init__(namn,hälsa,power)
+    def __init__(self,namn,hälsa,power,stamina):
+        super().__init__(namn,hälsa,power,stamina)
