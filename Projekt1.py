@@ -235,7 +235,7 @@ def Spel(spelare1, spelare2):
         runda += 1
 
 
-if __name__ == "__main__":
+def main():
     print("Välkommen till STRIDSSPELET!\n")
     print("1. Spela 1v1\n2. Spela mot datorn")
     läge = input("Välj läge: ")
@@ -261,3 +261,5 @@ if __name__ == "__main__":
 
     else:
         print("Ogiltigt val, spelet avslutas.")
+
+main()
