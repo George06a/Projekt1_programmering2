@@ -9,13 +9,22 @@ class Karaktärer:
         self.stamina = stamina
     
     def attack(self, motståndare):
-        if self.stamina>0:
+        if self.stamina>10:
             print(f"{self.namn} attackerar {motståndare.namn}")
             motståndare.Ta_Skada(self.power)
             self.stamina -= 10
             print(f"Stamina Kvar: {self.stamina}\n")
         else:
             print(f"{self.namn} är för trött för att attackera!\n Stamina: {self.stamina} \n")
+    
+    def superattack(self, motståndare):
+        if self.stamina >= 80:
+            print(f"{self.namn} gör en SUPERATTACK på {motståndare.namn}!")
+            motståndare.Ta_Skada(self.power * 3)
+            self.stamina -= 80
+            print(f"Stamina kvar: {self.stamina}\n")
+        else:
+            print(f"{self.namn} har inte tillräckligt med stamina för superattack!\n")
     
     # Vad händer efter karaktären tagit skada.
     def Ta_Skada(self, skada):
@@ -31,7 +40,7 @@ class Karaktärer:
 #Karaktär 1
 class Mage(Karaktärer):
     def __init__(self,namn,hälsa,power,mana):
-        super().__init__(namn,hälsa,power,stamina=0)
+        super().__init__(namn,hälsa,power)
         self.mana = mana
 
     def attack(self, motståndare):
@@ -41,6 +50,15 @@ class Mage(Karaktärer):
     def få_mana(self):
         self.mana += 5
         print(f"{self.namn} får tillbaks 5 mana. \n Mana nu: {self.mana} \n")
+
+    def superattack(self, motståndare):
+        if self.mana >= 80:
+            print(f"{self.namn} gör en SUPERATTACK på {motståndare.namn}!")
+            motståndare.Ta_Skada(self.power * 3)
+            self.mana -= 80
+            print(f"Mana kvar: {self.mana}\n")
+        else:
+            print(f"{self.namn} har inte tillräckligt med mana för superattack!\n")
 
 #Karaktär 2 
 class Assasin(Karaktärer):
