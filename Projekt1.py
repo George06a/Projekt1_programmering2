@@ -5,7 +5,7 @@ class Karaktärer:
     def __init__(self,namn,hälsa,power,stamina):
         self.namn = namn
         self.hälsa = hälsa
-        self.skada = power
+        self.power = power
         self.stamina = stamina
     
     def attack(self, motståndare):
@@ -25,6 +25,10 @@ class Karaktärer:
             print(f"Stamina kvar: {self.stamina}\n")
         else:
             print(f"{self.namn} har inte tillräckligt med stamina för superattack!\n")
+
+    def blocka(self):
+        self.stamina += 25
+        print(f"{self.namn} blockerar och återfår 25 stamina!\n Stamina nu: {self.stamina}\n")
     
     # Vad händer efter karaktären tagit skada.
     def Ta_Skada(self, skada):
@@ -59,6 +63,10 @@ class Mage(Karaktärer):
             print(f"Mana kvar: {self.mana}\n")
         else:
             print(f"{self.namn} har inte tillräckligt med mana för superattack!\n")
+    
+    def blocka(self):
+        self.mana += 15
+        print(f"{self.namn} blockerar/dodgar och återfår 15 mana! Mana nu: {self.mana}\n")
 
 #Karaktär 2 
 class Assasin(Karaktärer):
