@@ -9,9 +9,9 @@ class Karaktärer:
         self.stamina = stamina
     
     def attack(self, motståndare):
-        if self.stamina>10:
+        if self.stamina>=10:
             print(f"{self.namn} attackerar {motståndare.namn}")
-            motståndare.Ta_Skada(self.power)
+            motståndare.ta_skada(self.power)
             self.stamina -= 10
             print(f"Stamina Kvar: {self.stamina}\n")
         else:
@@ -20,7 +20,7 @@ class Karaktärer:
     def superattack(self, motståndare):
         if self.stamina >= 80:
             print(f"{self.namn} gör en SUPERATTACK på {motståndare.namn}!")
-            motståndare.Ta_Skada(self.power * 3)
+            motståndare.ta_skada(self.power * 3)
             self.stamina -= 80
             print(f"Stamina kvar: {self.stamina}\n")
         else:
@@ -31,7 +31,7 @@ class Karaktärer:
         print(f"{self.namn} blockerar och återfår 25 stamina!\n Stamina nu: {self.stamina}\n")
     
     # Vad händer efter karaktären tagit skada.
-    def Ta_Skada(self, skada):
+    def ta_skada(self, skada):
         self.hälsa -= skada
         if self.hälsa < 0:
             self.hälsa = 0
@@ -44,12 +44,16 @@ class Karaktärer:
 #Karaktär 1
 class Mage(Karaktärer):
     def __init__(self,namn,hälsa,power,mana):
-        super().__init__(namn,hälsa,power)
+        super().__init__(namn,hälsa,power,stamina=0)
         self.mana = mana
 
     def attack(self, motståndare):
-        print(f"{self.namn} Attackerar {motståndare.namn}")
-        motståndare.Ta_Skada(self.power)
+        if self.mana>=10:
+            print(f"{self.namn} Attackerar {motståndare.namn}")
+            motståndare.ta_skada(self.power)
+            self.mana-=10
+        else:
+            print(f"{self.namn} har inte tillräckligt med mana!\n")
 
     def få_mana(self):
         self.mana += 5
@@ -58,7 +62,7 @@ class Mage(Karaktärer):
     def superattack(self, motståndare):
         if self.mana >= 80:
             print(f"{self.namn} gör en SUPERATTACK på {motståndare.namn}!")
-            motståndare.Ta_Skada(self.power * 3)
+            motståndare.ta_skada(self.power * 3)
             self.mana -= 80
             print(f"Mana kvar: {self.mana}\n")
         else:
