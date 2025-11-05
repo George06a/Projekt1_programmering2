@@ -30,12 +30,17 @@ class Karaktärer:
     
 #Karaktär 1
 class Mage(Karaktärer):
-    def __init__(self,namn,hälsa,power):
+    def __init__(self,namn,hälsa,power,mana):
         super().__init__(namn,hälsa,power,stamina=0)
+        self.mana = mana
 
     def attack(self, motståndare):
         print(f"{self.namn} Attackerar {motståndare.namn}")
-        motståndare.Ta_Skada(self.powerx)
+        motståndare.Ta_Skada(self.power)
+
+    def få_mana(self):
+        self.mana += 5
+        print(f"{self.namn} får tillbaks 5 mana. \n Mana nu: {self.mana} \n")
 
 #Karaktär 2 
 class Assasin(Karaktärer):
