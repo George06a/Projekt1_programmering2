@@ -20,8 +20,10 @@ class Karaktärer:
             motståndare.ta_skada(self.power)
             self.ändra_stamina(-10)
             print(f"Stamina Kvar: {self.get_stamina()}\n")
+            return True
         else:
             print(f"{self.namn} är för trött för att attackera!\n Stamina: {self.get_stamina()} \n")
+            return False
     
     def superattack(self, motståndare):
         if self.get_stamina() >= 80:
@@ -29,8 +31,10 @@ class Karaktärer:
             motståndare.ta_skada(self.power * 3)
             self.ändra_stamina(-80)
             print(f"Stamina kvar: {self.get_stamina()}\n")
+            return True
         else:
-            print(f"{self.namn} har inte tillräckligt med stamina för superattack!\n")
+            print(f"{self.namn} har inte tillräckligt med stamina för superattack!\nFörsök Igen \n")
+            return False
 
     def blocka(self):
         self.ändra_stamina(25)
@@ -55,9 +59,10 @@ class Karaktärer:
     def visa_stats(self):
         print(f"\n🔹 {self.namn}s stats:")
         print(f"Hälsa: {self.get_hälsa()}")
-        print(f"Stamina: {self.get_stamina()}")
         if isinstance(self, Mage):
             print(f"Mana: {self.get_mana()}")
+        else:
+            print(f"Stamina: {self.get_stamina()}")
         print(f"Power: {self.power}\n")
     
 #Karaktär 1
@@ -74,8 +79,10 @@ class Mage(Karaktärer):
             print(f"{self.namn} Attackerar {motståndare.namn}")
             motståndare.ta_skada(self.power)
             self.__mana-=10
+            return True
         else:
             print(f"{self.namn} har inte tillräckligt med mana!\n")
+            return False
 
     def få_mana(self):
         self.__mana += 5
@@ -87,8 +94,10 @@ class Mage(Karaktärer):
             motståndare.ta_skada(self.power * 3)
             self.__mana -= 80
             print(f"Mana kvar: {self.get_mana()}\n")
+            return True
         else:
-            print(f"{self.namn} har inte tillräckligt med mana för superattack!\n")
+            print(f"{self.namn} har inte tillräckligt med mana för superattack!\n Försök Igen!\n")
+            return False
     
     def blocka(self):
         self.__mana += 15
@@ -114,13 +123,15 @@ import random
 
 def dator_tur(dator, motståndare):
     """Datorn väljer slumpmässigt attack, superattack eller blocka"""
-    val = random.choice([1,2,3])
-    if val == 1:
-        dator.attack(motståndare)
-    elif val == 2:
-        dator.superattack(motståndare)
-    elif val == 3:
-        dator.blocka()
+    lyckades= False
+    while not lyckades:
+        val = random.choice([1, 2, 3])
+        if val == 1:
+            lyckades = dator.attack(motståndare)
+        elif val == 2:
+            lyckades = dator.superattack(motståndare)
+        elif val == 3:
+            dator.blocka()
 
 def välj_karaktär(spelarnamn):
     while True:
@@ -157,11 +168,17 @@ def Spel(spelare1, spelare2):
         while True:
             val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
             if val == "1":
-                spelare1.attack(spelare2)
-                break
+                attackerar=spelare1.attack(spelare2)
+                if attackerar:
+                    break
+                else:
+                    continue
             elif val == "2":
-                spelare1.superattack(spelare2)
-                break
+                Superattackerar=spelare1.superattack(spelare2)
+                if Superattackerar:
+                    break
+                else:
+                    continue
             elif val == "3":
                 spelare1.blocka()
                 break
@@ -184,11 +201,17 @@ def Spel(spelare1, spelare2):
             while True:
                 val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
                 if val == "1":
-                    spelare2.attack(spelare1)
-                    break
+                    attackerar=spelare1.attack(spelare2)
+                    if attackerar:
+                        break
+                    else:
+                        continue
                 elif val == "2":
-                    spelare2.superattack(spelare1)
-                    break
+                    Superattackerar=spelare1.superattack(spelare2)
+                    if Superattackerar:
+                        break
+                    else:
+                        continue
                 elif val == "3":
                     spelare2.blocka()
                     break
