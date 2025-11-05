@@ -52,6 +52,14 @@ class Karaktärer:
     def lever(self):
         return self.__hälsa > 0 
     
+    def visa_stats(self):
+        print(f"\n🔹 {self.namn}s stats:")
+        print(f"Hälsa: {self.get_hälsa()}")
+        print(f"Stamina: {self.get_stamina()}")
+        if isinstance(self, Mage):
+            print(f"Mana: {self.get_mana()}")
+        print(f"Power: {self.power}\n")
+    
 #Karaktär 1
 class Mage(Karaktärer):
     def __init__(self,namn,hälsa,power,mana):
@@ -147,7 +155,7 @@ def Spel(spelare1, spelare2):
         # Spelare 1:s tur
         print(f"\n{spelare1.namn}s tur:")
         while True:
-            val = input("1. Attack  2. Superattack  3. Blocka: ")
+            val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
             if val == "1":
                 spelare1.attack(spelare2)
                 break
@@ -157,6 +165,9 @@ def Spel(spelare1, spelare2):
             elif val == "3":
                 spelare1.blocka()
                 break
+            elif val == "4":
+                spelare1.visa_stats()
+                continue
             else:
                 print("Ogiltigt val, du missade din tur!")
                 continue
@@ -171,7 +182,7 @@ def Spel(spelare1, spelare2):
             dator_tur(spelare2,spelare1)
         else:
             while True:
-                val = input("1. Attack  2. Superattack  3. Blocka: ")
+                val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
                 if val == "1":
                     spelare2.attack(spelare1)
                     break
@@ -181,6 +192,9 @@ def Spel(spelare1, spelare2):
                 elif val == "3":
                     spelare2.blocka()
                     break
+                elif val == "4":
+                    spelare2.visa_stats()
+                    continue
                 else:
                     print("Ogiltigt val, Testa Igen!")
                     continue
