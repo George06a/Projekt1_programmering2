@@ -128,10 +128,15 @@ def dator_tur(dator, motståndare):
         val = random.choice([1, 2, 3])
         if val == 1:
             lyckades = dator.attack(motståndare)
+            break
         elif val == 2:
             lyckades = dator.superattack(motståndare)
+            break
         elif val == 3:
-            dator.blocka()
+            lyckades=dator.blocka()
+            break
+        else:
+            continue
 
 def välj_karaktär(spelarnamn):
     while True:
