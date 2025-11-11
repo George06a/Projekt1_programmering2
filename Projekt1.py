@@ -121,22 +121,32 @@ class Gambler(Karaktärer):
 
 import random
 
-def dator_tur(dator, motståndare):
-    """Datorn väljer slumpmässigt attack, superattack eller blocka"""
-    lyckades= False
-    while not lyckades:
-        val = random.choice([1, 2, 3])
-        if val == 1:
-            lyckades = dator.attack(motståndare)
-            break
-        elif val == 2:
-            lyckades = dator.superattack(motståndare)
-            break
-        elif val == 3:
-            lyckades=dator.blocka()
-            break
-        else:
-            continue
+class Spelare:
+    def __init__(self, karaktär):
+        self.karaktär = karaktär
+
+    def tur(self, motståndare):
+        while True:
+            val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
+            if val == "1":
+                if self.karaktär.attack(motståndare.karaktär): break
+            elif val == "2":
+                if self.karaktär.superattack(motståndare.karaktär): break
+            elif val == "3":
+                self.karaktär.blocka(); break
+            elif val == "4":
+                self.karaktär.visa_stats()
+            else:
+                print("Ogiltigt val, försök igen!")
+
+class Dator(Spelare):
+    def tur(self, motståndare):
+        while True:
+            val = random.choice([1, 2, 3])
+            if val == 1 and self.karaktär.attack(motståndare.karaktär): break
+            elif val == 2 and self.karaktär.superattack(motståndare.karaktär): break
+            elif val == 3:
+                self.karaktär.blocka(); break
 
 def välj_karaktär(spelarnamn):
     while True:
