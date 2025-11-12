@@ -172,7 +172,7 @@ def välj_karaktär(spelarnamn):
 
 
 
-class Spel:
+class Arena:
     def __init__(self, spelare1, spelare2):
         self.spelare1 = spelare1
         self.spelare2 = spelare2
@@ -231,8 +231,8 @@ def main():
         print("Ogiltigt val, spelet avslutas.")
         return
 
-    spel = Spel(spelare1, spelare2)
-    spel.start()
+    Arena = Arena(spelare1, spelare2)
+    Arena.start()
 
 
 main()
