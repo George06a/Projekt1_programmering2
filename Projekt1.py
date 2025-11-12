@@ -184,14 +184,14 @@ class Spel:
             print(f"--- Runda {self.runda} ---")
 
             print(f"\n{self.spelare1.karaktär.namn}s tur:")
-            self.spelare1.ta_tur(self.spelare2)
+            self.spelare1.tur(self.spelare2)
 
             if not self.spelare2.karaktär.lever():
                 print(f"\n💀 {self.spelare2.karaktär.namn} besegrades! {self.spelare1.karaktär.namn} vann! 💪")
                 break
 
             print(f"\n{self.spelare2.karaktär.namn}s tur:")
-            self.spelare2.ta_tur(self.spelare1)
+            self.spelare2.tur(self.spelare1)
 
             if not self.spelare1.karaktär.lever():
                 print(f"\n💀 {self.spelare1.karaktär.namn} besegrades! {self.spelare2.karaktär.namn} vann! 💪")
