@@ -172,82 +172,38 @@ def välj_karaktär(spelarnamn):
 
 
 
-def Spel(spelare1, spelare2):
-    print(f"\n⚔️ Striden börjar mellan {spelare1.namn} och {spelare2.namn}! ⚔️\n")
-    runda = 1
-    while spelare1.lever() and spelare2.lever():
-        print(f"--- Runda {runda} ---")
+class Spel:
+    def __init__(self, spelare1, spelare2):
+        self.spelare1 = spelare1
+        self.spelare2 = spelare2
+        self.runda = 1
 
-        # Spelare 1:s tur
-        print(f"\n{spelare1.namn}s tur:")
-        while True:
-            val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
-            if val == "1":
-                attackerar=spelare1.attack(spelare2)
-                if attackerar:
-                    break
-                else:
-                    continue
-            elif val == "2":
-                Superattackerar=spelare1.superattack(spelare2)
-                if Superattackerar:
-                    break
-                else:
-                    continue
-            elif val == "3":
-                spelare1.blocka()
+    def start(self):
+        print(f"\n⚔️ Striden börjar mellan {self.spelare1.karaktär.namn} och {self.spelare2.karaktär.namn}! ⚔️\n")
+        while self.spelare1.karaktär.lever() and self.spelare2.karaktär.lever():
+            print(f"--- Runda {self.runda} ---")
+
+            print(f"\n{self.spelare1.karaktär.namn}s tur:")
+            self.spelare1.ta_tur(self.spelare2)
+
+            if not self.spelare2.karaktär.lever():
+                print(f"\n💀 {self.spelare2.karaktär.namn} besegrades! {self.spelare1.karaktär.namn} vann! 💪")
                 break
-            elif val == "4":
-                spelare1.visa_stats()
-                continue
-            else:
-                print("Ogiltigt val, du missade din tur!")
-                continue
 
-        if not spelare2.lever():
-            print(f"\n💀 {spelare2.namn} besegrades! {spelare1.namn} vann! 💪")
-            break
+            print(f"\n{self.spelare2.karaktär.namn}s tur:")
+            self.spelare2.ta_tur(self.spelare1)
 
-        # Spelare 2:s tur
-        print(f"\n{spelare2.namn}s tur:")
-        if spelare2.namn == "Datorn":
-            dator_tur(spelare2,spelare1)
-        else:
-            while True:
-                val = input("1. Attack  2. Superattack  3. Blocka  4. Visa Stats: ")
-                if val == "1":
-                    attackerar=spelare1.attack(spelare2)
-                    if attackerar:
-                        break
-                    else:
-                        continue
-                elif val == "2":
-                    Superattackerar=spelare1.superattack(spelare2)
-                    if Superattackerar:
-                        break
-                    else:
-                        continue
-                elif val == "3":
-                    spelare2.blocka()
-                    break
-                elif val == "4":
-                    spelare2.visa_stats()
-                    continue
-                else:
-                    print("Ogiltigt val, Testa Igen!")
-                    continue
+            if not self.spelare1.karaktär.lever():
+                print(f"\n💀 {self.spelare1.karaktär.namn} besegrades! {self.spelare2.karaktär.namn} vann! 💪")
+                break
 
-        if not spelare1.lever():
-            print(f"\n💀 {spelare1.namn} besegrades! {spelare2.namn} vann! 💪")
-            break
+            # Mage får tillbaka mana
+            if isinstance(self.spelare1.karaktär, Mage):
+                self.spelare1.karaktär.få_mana()
+            if isinstance(self.spelare2.karaktär, Mage):
+                self.spelare2.karaktär.få_mana()
 
-        # Mage får tillbaka mana varje runda
-        if isinstance(spelare1, Mage):
-            spelare1.få_mana()
-        if isinstance(spelare2, Mage):
-            spelare2.få_mana()
-
-        runda += 1
+            self.runda += 1
 
 
 def main():
@@ -276,5 +232,8 @@ def main():
 
     else:
         print("Ogiltigt val, spelet avslutas.")
+    
+    spel = Spel(spelare1,spelare2)
+    spel.start()
 
 main()
