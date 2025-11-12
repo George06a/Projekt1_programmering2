@@ -214,26 +214,25 @@ def main():
     if läge == "1":
         namn1 = input("Spelare 1 namn: ")
         namn2 = input("Spelare 2 namn: ")
-        spelare1 = välj_karaktär(namn1)
-        spelare2 = välj_karaktär(namn2)
-        Spel(spelare1, spelare2)
-
+        spelare1 = Spelare(välj_karaktär(namn1))
+        spelare2 = Spelare(välj_karaktär(namn2))
     elif läge == "2":
         namn1 = input("Ditt namn: ")
-        spelare1 = välj_karaktär(namn1)
-        dator = random.choice([
+        spelare1 = Spelare(välj_karaktär(namn1))
+        dator_karaktär = random.choice([
             Mage("Datorn", 100, 15, mana=50),
             Assasin("Datorn", 110, 20, 100),
             Shieldbearer("Datorn", 150, 10, 120),
             Gambler("Datorn", 120, 12, 100)
         ])
-        print(f"\nDu möter {dator.namn} som är en {dator.__class__.__name__}!\n")
-        Spel(spelare1, dator)
-
+        spelare2 = Dator(dator_karaktär)
+        print(f"\nDu möter {dator_karaktär.namn} som är en {dator_karaktär.__class__.__name__}!\n")
     else:
         print("Ogiltigt val, spelet avslutas.")
-    
-    spel = Spel(spelare1,spelare2)
+        return
+
+    spel = Spel(spelare1, spelare2)
     spel.start()
+
 
 main()
