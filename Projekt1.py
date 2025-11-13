@@ -231,8 +231,8 @@ def main():
         print("Ogiltigt val, spelet avslutas.")
         return
 
-    Arena = Arena(spelare1, spelare2)
-    Arena.start()
+    arena = Arena(spelare1, spelare2)
+    arena.start()
 
 
 main()
